@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const request = require("request");
+//const request = require("request");
 const pool = require("./dbPool.js");
 const querystring = require('querystring');
 
