@@ -1,0 +1,28 @@
+<%- include('partials/header.ejs') %>
+
+		<section class="login-box">
+			<h2 class="center-txt">Sign in to your account to add, or delete questions for users.</h2>
+			<hr>
+			<div class="form-box">
+				<h3>Admins: Enter your account details.</h3>
+				<form method="POST">
+					User Name<br>
+					<input type="text" name="uname" style="width: 250px;">
+					<br>
+					Password<br>
+					<input type="password" name="pword" style="width: 250px;">
+					<br><br>
+					<button>Log In</button>
+				</form>
+				
+				<% if (typeof loginError != "undefined" && loginError) { %>
+				
+					<h4 class="error" style= "color:red">Error: Password or user name is incorrect.</h4>
+				
+				<% }%>
+				
+			</div>
+
+		</section>
+
+<%- include('partials/footer.ejs') %>

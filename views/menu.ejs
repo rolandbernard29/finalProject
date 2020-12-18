@@ -1,0 +1,42 @@
+<%- include('partials/header.ejs') %>
+  <!-- Begin page content -->
+  
+    <div class="container">
+      <div class="row">
+        <form action="/logout">
+            <button style="float: right;">
+                Logout
+            </button>
+        </form>
+       <h2 class="center-txt"> Choose between 4 different categories!</h2>
+      
+      <div class="col-md-3">
+        <h5>Category 1: Animals</h5>
+        <img class="img-fluid" src="img/animals.jpg" height="225">
+        <p><a href="quiz/animals" type="button" style="margin-top: 6px;" class="btn btn-primary">Start Quiz</a></p>
+      </div>
+      
+      <div class="col-md-3">
+        <h5>Category 2: Birds</h5>
+        <img class="img-fluid" src="img/birds.jpg" height="225">
+        <p><a href="quiz/bird" type="button" style="margin-top: 6px;" class="btn btn-primary">Start Quiz</a></p>
+      </div>
+      
+      <div class="col-md-3">
+        <h5>Category 3: Mammals</h5>
+        <img class="img-fluid" src="img/mammals.jpg" height="225">
+        <p><a href="quiz/mammals" type="button" style="margin-top: 6px;" class="btn btn-primary">Start Quiz</a></p>
+      </div>
+      
+      <div class="col-md-3">
+        <h5>Category 4: Sea Animals</h5>
+        <img class="img-fluid" src="img/seaanimals.jpg" height="225">
+        <p><a href="quiz/seaanimal" type="button" style="margin-top: 6px;" class="btn btn-primary">Start Quiz</a></p>
+      </div>
+       
+    </div>
+  </div>
+  <br><br>
+	<h3>After you submit your quiz, please select the menu icon to go back and play with the other categories!</h3>
+	
+<%- include('partials/footer.ejs') %>

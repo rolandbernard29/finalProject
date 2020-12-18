@@ -1,0 +1,49 @@
+<%- include('partials/header.ejs') %>
+<main class="flex-shrink-0">
+  <div class="container" style="margin-bottom: 200px;">
+    <body class='text-center'>
+    <h1>Good Luck With This Quiz!</h1>
+    <div id="quiz">
+        <form id="quizForm" action="/quiz" method="POST">
+            <% quizRows.forEach(function(row, i){ %>
+            <h3><%=row["question"]%></h3>
+            <input type="radio" name="question<%=row["question_id"]%>" id="question<%=i%>Answer1" value="<%=row["question_id"]%>_<%=row["answer_1"]%>">
+            <label for="question<%=i%>Answer1"><%=row["answer_1"]%></label><br>
+            <input type="radio" name="question<%=row["question_id"]%>" id="question<%=i%>Answer2" value="<%=row["question_id"]%>_<%=row["answer_2"]%>">
+            <label for="question<%=i%>Answer2"><%=row["answer_2"]%></label><br>
+            <input type="radio" name="question<%=row["question_id"]%>" id="question<%=i%>Answer3" value="<%=row["question_id"]%>_<%=row["answer_3"]%>">
+            <label for="question<%=i%>Answer3"><%=row["answer_3"]%></label><br>
+            <input type="radio" name="question<%=row["question_id"]%>" id="question<%=i%>Answer4" value="<%=row["question_id"]%>_<%=row["answer_4"]%>">
+            <label for="question<%=i%>Answer4"><%=row["answer_4"]%></label><br>
+            <% }) %>
+            <br>
+            <input id="postQuizBtn" type="submit">
+            <p class="text-danger" id="mustAnswer">You must answer all the questions!</p>
+        </form>
+    </div>
+    
+    <script>
+      $( document ).ready(function() {
+        $("#postQuizBtn").prop('disabled', true);
+        
+        $(":radio").change(function() {
+          var names = {};
+          $(':radio').each(function() {
+            names[$(this).attr('name')] = true;
+           });
+          var count = 0;
+          $.each(names, function() { 
+        count++;
+         });
+        if ($(':radio:checked').length === count) {
+          $("#postQuizBtn").prop('disabled', false);
+          $("#mustAnswer").hide();
+        }
+        }).change();
+        
+      });
+    </script>
+    
+    </main>
+        
+<%- include('partials/footer.ejs') %>

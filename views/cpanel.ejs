@@ -1,0 +1,209 @@
+<%- include('partials/header.ejs') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script>
+  		<section class="login-box">
+  		 
+ 								<form action="/logout">
+            <button style="float: right;">
+                Logout
+            </button>
+        </form>
+			<h2 class="center-txt">Admin Panel</h2>
+
+			<hr>
+			<div class="form-box-admin flex-admin-col">
+				<div class="flex-admin">
+					<div class="flex-share" style="width: 50%;">
+						<h3>Add Questions</h3>
+							
+							<br><br>
+							animals <br>
+							<input type="text" name="animals"  id="animals" style="width: 250px;">
+							<br><br>
+							category<br>
+							<select name="category" id="category" style="width: 250px; ">
+							<option value="Birds">Birds</option>
+                            <option value="mammals">Mammals</option>
+                            <option value="animals">animals</option>
+                            <option value="seaanimal">seaanimal</option>
+							</select>
+							<br><br>
+							Question<br>
+							<input type="text" name="questions" id="question" style="width: 250px;">
+							<br><br>
+							answer_1<br>
+							<input type="text" name="answer_1" id="answer_1" style="width: 250px;">
+							<br><br>
+							answer_2<br>
+							<input type="text" name="answer_2" id="answer_2"  style="width: 250px;">
+							<br><br>
+							answer_3<br>
+							<input type="text" name="answer_3" id="answer_3"  style="width: 250px;">
+							<br><br>
+							answer_4<br>
+							<input type="text" name="answer_4"  id="answer_4" style="width: 250px;">
+							<br><br>
+							answer* (the true answer out of the 4)<br>
+							<input type="text" name="answer" id="answer"  style="width: 250px;">
+							<br><br>
+							<button class="addquestions">Add Question</button>
+						<br><br>
+				        <br><br>
+			        	<br><br>
+					
+						<div id="mod-msg-info"></div>
+					</div>	
+						<div class="form-delete-question flex-share">
+						<h3>Delete questions</h3>
+						<br><br><br>
+					        question_id<br><br>
+							<input type="text" name="question_id" id="question_id" style="width: 250px;">
+							<br><br><br>
+							<button class="displayquestion">Display Question</button>
+							
+							<div class="mydatatable" style="display:none">
+							 
+             <table id= "dataTable" class="table table-bordered table-striped">
+             <thead>
+             <tr>
+                 <th> QuestionId</th>
+                 <th>Question</th>
+                 <th>Answer</th>
+                
+                 </tr>
+                
+                 </thead>
+                 <tbody></tbody>
+             </table>
+					</div>		
+					<button class="deletequestion" style="display:none"> Delete Question</button>
+					</form>
+					</div>
+
+				</div>				
+				
+			</div>
+			
+			
+			<script>
+			 $('.displayquestion').click(function() {
+			 	let question_id=$('#question_id').val();
+			 	$('#dataTable').DataTable({
+            
+            "processing": true,
+            "serverSide": true,
+            "dom" : "lrtip",
+            "paging" : false,
+            "info" : false,
+            
+            "ajax": {
+                "data":"json",
+                "type": "GET",
+                "url": "/api/show_question",
+                 data: {
+                     
+                      'question_id': question_id,
+                   
+                },
+                "dataSrc" : ""
+           
+            },
+                "columns": [  
+                    { "data": "question_id" },  
+                    { "data": "question" },  
+                    { "data": "answer" } 
+                   
+                ]  
+            
+        });
+			 	
+			 	 $(".mydatatable").show();
+			 	$(".deletequestion").show();
+			 	
+			 });
+			
+	// click event listener to add questions 
+ $('.addquestions').click(function() {
+      
+        console.log("clciko");
+        
+         let animals=$('#animals').val();
+          let category=$('#category').val();
+          let question=$('#question').val();
+          let answer_1=$('#answer_1').val();
+          let answer_2=$('#answer_2').val();
+          let answer_3=$('#answer_3').val();
+          let answer_4=$('#answer_4').val();
+          let answer=$('#answer').val();
+          console.log("animals"+animals);
+         
+          if(animals!='' && category !='') {
+         
+         $.ajax({
+                 method: 'get',
+                 url: '/api/crudquestion',
+                 data: {
+                     'action': "insert",
+                      'animals': animals,
+                      'category': category,
+                      'question': question,
+                      'answer_1': answer_1,
+                      'answer_2': answer_2,
+                      'answer_3': answer_3,
+                      'answer_4': answer_4,
+                      'answer' : answer
+                   
+                },
+                success: (data, status) => {
+                   // resolve(data);
+                   $('input[type="text"]').val('');
+                   alert("Record added successfully");
+                }
+            }); // add data
+          }
+          else {
+          	alert("Fields missing ..Fill them");
+          }
+    }); 
+    
+    
+    $('.deletequestion').click(function() {
+      
+        console.log("delete");
+        
+         let question_id=$('#question_id').val();
+         
+          console.log("animals"+ question_id);
+         
+          if(question_id!='') {
+         
+         $.ajax({
+                 method: 'get',
+                 url: '/api/crudquestion',
+                 data: {
+                     'action': "delete",
+                      'question_id': question_id,
+                      
+                   
+                },
+                success: (data, status) => {
+                
+                   $(".mydatatable").hide();
+                   $('input[type="text"]').val('');
+                   alert("Question deleted successfully");
+                   	$(".deletequestion").hide();
+                }
+            }); // add data
+          }
+          else {
+          	alert("Question ID  missing ..Fill to delete");
+          }
+    }); 
+			</script>
+			
+  
+  
+<%- include('partials/footer.ejs') %>

@@ -1,0 +1,34 @@
+<%- include('partials/header.ejs') %>
+
+<main class="flex-shrink-0">
+  <div class="container">
+
+    <body class='text-center'>
+    <h1 class="mt-5">Here Are Your Results! Thanks For Playing!</h1>
+    
+    <div id="quiz">
+      
+    <!--<h3>You Got A Score Of: <=score%>%</h3> -->
+    
+    <h3 id = "totalScore" class = "text-info"></h3>
+    <h3> Go back to the menu to continue to play. </h3>
+    <img src="img/resultsanimals.jpg" height="450">
+    </div>
+    
+    
+<script>
+                  var score1 = <%=score%>;
+                if (score1 >= 70) {
+                    //add/remove Classes overwrites the former bootstrap class
+                   $('#totalScore').removeClass("red");
+                   $('#totalScore').addClass("green");
+                    $("#totalScore").html(`Total Score: ${score1}% Hooray! You did great! =D`);
+                } else {
+                    $('#totalScore').removeClass("green");
+                    $('#totalScore').addClass("red");
+                    $("#totalScore").html(`Total Score: ${score1}% Sorry, you did not pass - try again`);
+                }
+</script>
+
+</main>
+<%- include('partials/footer.ejs') %>
